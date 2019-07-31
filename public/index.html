@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PWAGram</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="/src/css/navbar.css">
+  <link rel="stylesheet" href="/src/css/app.css">
+  <link rel="stylesheet" href="/src/css/feed.css">
+  <link rel="stylesheet" href="/src/css/filters.css">
+  <link rel="manifest" href = "/manifest.json">
+  <link rel="icon" href="/favicon.ico" sizes="16x16">
+  <script src="/src/js/app.js"></script>
+  
+</head>
+<body>
+  <!--navbar-->
+  <div class="top-app-bar z-depth-3">
+    <div class="row">
+      <div class="col l2 s3 m3 left-align"><a href="#"><i class="material-icons">home</i></a></div>
+      <div class="col l6 hide-on-med-and-down" id="searchbar">
+        <input class="browser-default" type="text">
+        <button class="waves-effect"><i class="material-icons">search</i></button>
+      </div>
+      <div class="col s3 m3 hide-on-large-only center-align search"><a href="#"><i class="material-icons">search</i></a></div>
+      <div class="col l2 s3 m3 center-align person"><a href="#"><i class="material-icons">person</i></a></div>
+      <div class="col l2 s3 m3 right-align">
+        <a href="#"><i class="material-icons" onclick = "(function(){window.location.href = '/notifications'}())">notifications</i></a>
+      </div>
+    </div>
+  </div>
+
+  <!--Bottom navigation drawer-->
+ 
+  
+
+  <!-- <div style="margin-left: 50%;margin-top: 1%;display: none;" id="spinner">
+      <div class="preloader-wrapper small active">
+          <div class="spinner-layer spinner-blue-only">
+            <div class="circle-clipper left">
+              <div class="circle"></div>
+            </div><div class="gap-patch">
+              <div class="circle"></div>
+            </div><div class="circle-clipper right">
+              <div class="circle"></div>
+            </div>
+          </div>
+        </div>
+  </div>
+   -->
+  
+
+  <!--sort and filter button-->
+  <div class="sort-and-filter right-align">
+    <button data-target="modal1" class="btn modal-trigger blue darken-2 waves-effect">Filter</button>
+    <a class='dropdown-trigger btn blue darken-2 waves-effect' href='#' data-target='dropdown1'>Sort</a>
+    <button class="btn blue waves-effect postData">POST</button>
+  </div>
+
+  <div id="newposts-notif" style="display:none;">
+    <p style="font-size: 120%;color:white;padding-top: 5px;padding-bottom: 5px;">New Posts</p>
+
+  </div>
+  
+  
+
+  <!--main content:movie posts in form of cards-->
+  <div class="row posts">
+    <div class="col l4 m6 s12 post" style="display: none;">
+      <div class="card">
+        <div class="card-image" >
+          <picture>
+              <source media="(max-width: 430px)" srcset="">
+              <source media="(max-width: 600px)" srcset="">
+              <source media="(max-width: 700px)" srcset="">
+              <source media="(max-width: 992px)" srcset="">
+
+            <img class="browser-default" width="100%" height="201px" src="/src/images/placeholder.png">
+          </picture>
+        </div>
+        <div class="card-content">
+          <p style="font-weight: 600;font-size: 150%;">Movie Title</p>
+        </div>
+        <div class="card-action row">
+          <span class="col s3"><i class="material-icons">thumb_up_alt</i></span>
+          <span class="col s3 center-align"><i class="material-icons">thumb_down_alt</i></span>
+          <span class="col s3 center-align"><i class="material-icons">done</i></span>
+          <span class="col s3 right-align"><i class="material-icons recommend">group</i></span>
+        </div>
+      </div>
+    </div>      
+  </div>
+
+  <div class="row idb-posts">
+    <div class="col l4 m6 s12 idb-post" style="display: none;">
+      <div class="card">
+        <div class="card-image">
+          <picture>
+              <source media="(max-width: 430px)" srcset="">
+              <source media="(max-width: 600px)" srcset="">
+              <source media="(max-width: 700px)" srcset="">
+              <source media="(max-width: 992px)" srcset="">
+
+            <img class="browser-default" width="100%" height="100%" src="/src/images/placeholder.png">
+          </picture>
+        </div>
+        <div class="card-content">
+          <p style="font-weight: 600;font-size: 150%;">Movie Title</p>
+        </div>
+        <div class="card-action row">
+          <span class="col s3"><i class="material-icons like">thumb_up_alt</i></span>
+          <span class="col s3 center-align"><i class="material-icons unlike">thumb_down_alt</i></span>
+          <span class="col s3 center-align"><i class="material-icons list">done</i></span>
+          <span class="col s3 right-align"><i class="material-icons recommend">group</i></span>
+          <span></span>
+        </div>
+      </div>
+    </div>      
+  </div>
+
+    <!-- Dropdown list Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+      <li><span class="black-text">By Popularity</span></li>
+      <li><span class="black-text">By Time</span></li>
+    </ul>
+    <!--dropdown-popup-->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <!--chips for choosing filters-->
+        <div class="" style = "font-family: sans-serif;">Apply filters you wish: </div>
+        <br>
+        <div id="filterchips">
+                <span id="1960schips">1960s</span>
+                <span id="1970schips">1970s</span>
+                <span id="1980schips">1980s</span>
+                <span id="1990schips">1990s</span>
+                <span id="2000schips">2000s</span>
+                <span id="2010schips">2010s</span>
+                <span id="actionchips">Action</span>
+                <span id="comedychips">Comedy</span>
+                <span id="horrorchips">Horror</span>
+                <span id="dramachips">Drama</span>
+                <span id="fantasychips">Fantasy</span>
+                <span id="romancechips">Romance</span>
+                <span id="adventurechips">Adventure</span>
+                <span id="sciencefictionchips">Science-Fiction</span>
+                <span id="crimechips">Crime</span>
+                <span id="documentarychips">Documentary</span>
+                <span id="thrillerchips">Thriller</span>
+                <span id="westernchips">Western</span>
+                <span id="disasterchips">Disaster</span>
+                <span id="warchips">War</span>
+                <span id="superherochips">SuperHero</span>
+                <span id="romcomchips">Romantic-Comedy</span>
+                <span id="epicchips">Epic</span>
+                <span id="biographicalchips">Biographical</span>
+                <span id="musicalchips">Musical</span>
+                <span id="sportschips">Sports</span>
+                <span id="mocumentarychips">Mocumentary</span>
+                <span id="mysterychips">Mystery</span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect btn blue darken-2" style="border-radius: 20px;width: 13%;">Done</a>
+      </div>
+      </div>
+      <!--Add bottom navigation bar for smaller screens-->
+      <!-- <div class="navbar row z-depth-2 hide-on-large-only" id="myNavbar">
+        <div class="col l3 s3 m3"><i class="material-icons" style="color: #0A79DF;">home</i></div>
+        <div class="col l3 s3 m3 center-align"><i class="material-icons">search</i></div>
+        <div class="col l3 s3 m3 center-align"><i class="material-icons">person</i></div>
+        <div class="col l3 s3 m3 right-align"><i class="material-icons">notifications</i></div>
+      </div> -->
+      <!--footer-->
+      
+
+      
+     
+      
+<script src="https://www.gstatic.com/firebasejs/6.1.1/firebase.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+<script src="/src/js/redux.js"></script>
+<script src="/src/js/promise.js"></script>
+<script src="/src/js/fetch.js"></script>
+<script src="/src/js/idb.js"></script>
+<script src="/src/js/utility_idb.js"></script>
+<script src="/src/js/app.js"></script>
+<script src="/src/js/feed.js"></script>
+<script src="/src/js/filters.js"></script>
+<script src="/src/js/feedOperations.js"></script>
+</body>
+</html>

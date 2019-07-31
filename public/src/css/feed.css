@@ -1,0 +1,30 @@
+
+#newposts-notif {
+  position: sticky;
+  top: 60px;
+  background: #a8c0ff;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #0A79DF, #a8c0ff);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #0A79DF, #a8c0ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  
+  z-index: 1000;
+  text-align: center;
+  width: 25%;
+  border-radius: 10px;
+  margin: auto 50% auto 42%;
+}
+ 
+
+.sort-and-filter {
+  margin: 20px;
+}
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,73 @@
+.top-app-bar {
+
+    padding: 1px;
+}
+#searchbar {
+ 
+  background-color: white;    
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  
+  
+}
+#searchbar input {
+    
+    outline: 0;
+    border: 0px; 
+    background-color: white;
+    
+    
+}
+#searchbar button {
+    
+}
+#searchbar button i {
+    
+    margin-left: 0px;
+}
+#searchbar button.search {
+  
+  border: 0px;
+  background-color: white;
+  border-radius: 0px 5px 5px 0px;
+} 
+#searchbar button.back {
+    
+    border: 0px;
+    background-color: white;
+}
+#searchbar button.filter {
+    
+    border: 0px;
+    background-color: white;
+}
+#results {
+    
+}
+.search-item {
+    cursor: pointer;
+}
+.search-item img{
+    
+    border: 0px;
+    border-radius: 10px;
+}
+.search-item span {
+   position: relative;
+   bottom: 20px;
+}
+
+.navbar {
+    margin: 0%;
+    padding-top: 10px;  
+    overflow: hidden;
+    
+    background-color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  .navbar div {
+    color: black;
+  }

@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Notifications</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="/src/css/navbar.css">
+        <style>
+            #header-sm-md {
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+                padding: 8px;
+            }
+            .notif {
+                line-height: 190%;
+            }
+            
+        </style>
+    </head>
+    <body>
+
+        <!--navbar top for small screens-->
+        <div class="row show-on-small hide-on-med-and-up" id="header-sm-md">
+            <div class="col s1 left-align">
+                <i class="material-icons" style="color: black;" onclick="(function(){window.history.back()}())">arrow_back</i>
+            </div>
+            <span class="col s11 left-align" style="font-weight: bold;font-size: 110%;">Notifications</span>
+        </div>
+
+        <!--navbar for large and medium screens-->
+        <div class="top-app-bar z-depth-2 hide-on-small-only">
+            <div class="row">
+                <div class="col l1 m1 "><a href="#">Logo</a></div>
+                <div class="col l1 m1 movies"> <a href="#">Movies</a></div>
+                <div class="col l1 m1 tv"><a href="#">TV</a></div>
+                <div class="col l7 m7" id="searchbar">
+                <input class="browser-default" type="text">
+                <button class="waves-effect"><i class="material-icons">search</i></button>
+                </div>
+                <div class="col l1 m1 group"><i class="material-icons">group</i></div>
+                <div class="col l1 m1 right-align"><a><i class="material-icons" id="user">person</i></a></div>
+            </div>
+        </div>
+
+        <div id="notifs">
+            <div class="notif" style="display: none;">Notification</div>
+
+        </div>
+    </body>
+    <script src="/src/js/notifications.js"></script>
+</html>

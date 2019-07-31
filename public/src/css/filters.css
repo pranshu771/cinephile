@@ -1,0 +1,20 @@
+
+#filterchips span {
+    display: inline-block;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 5px;
+    color: black;
+    background-color: #dedfe0;
+    cursor: pointer;
+    
+    
+
+}
+.chipnotclicked {
+    
+}
+#filterchips .chipclicked {
+    color: white;
+    background-color: #0A79DF;
+  }

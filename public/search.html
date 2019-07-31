@@ -1,0 +1,55 @@
+<html>
+    <head>
+        <title>Search</title>
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="/src/css/search.css">
+        
+    </head>
+    <body>
+        
+        <!--top bar-->
+        
+            <div class="row">
+                
+                <div class="col l12 s12 m12" id="searchbar">
+                    <button class="waves-effect back left-align">
+                        <i class="material-icons" onclick="(function(){window.history.back()}())">arrow_back</i>
+                    </button>
+                    <input class="browser-default" type="text" style="width: 90%;" placeholder="Search">
+                    <button class="waves-effect search"><i class="material-icons">search</i></button>
+                    <button class="waves-effect filter"><i class="material-icons">filter_list</i></button> 
+                      
+                </div>
+            <div>  
+                
+            
+                    
+            <div id="results" class="row" style="margin-left: 3%;position: relative;top: 30px;">
+                
+                <div class="col l12 s12 m12 search-item" id="org"><img height="52px" width="92px" style="display: none;"><span style="margin-left: 3%;"></span></div>
+
+            </div>
+                
+           
+
+        <!--sort and filter buttons-->
+
+        <div class="row">
+            <div class="col l6 s6 m6 left-align">
+                
+            </div>
+           
+        </div>
+        
+
+        
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        
+    </script>
+    <script src="/src/js/search.js"></script>
+</html>
