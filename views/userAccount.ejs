@@ -1,0 +1,723 @@
+<!-- <h1>User Account</h1>
+<p><%=userdata[0].username%></p>
+
+<form method="POST" action="/sendFriendRequest">
+    <input type="hidden" name = "username" value="<%=userdata[0].username%>">
+    <button id="addFriend" type= "submit">Add Friend</button>
+</form> -->
+
+<html>
+    <head>
+        <title><%=userdata[0].username%></title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <link rel="stylesheet" href="/src/css/navbar.css">
+        <style>
+            #header-sm-md {
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+                padding: 8px;
+            }
+            button {
+                font-weight: 600;
+            }
+            .top-app-bar {
+                margin-bottom: 20px;
+            }
+            #personal-info-lg {
+                margin-left: 20%;
+            }
+            #personal-info img {
+                border-radius: 50%;
+            }
+            #personal-info-lg img {
+                border-radius: 50%;
+            }
+            #profile-options button{
+                
+            }
+            #posts {
+
+            }
+            @media only screen and(min-width: 993px) {
+                #categ-tabs {
+                    margin-left: 20%;
+                    
+                }
+            }
+            
+            .tabs li a{
+                text-decoration: none;
+            }
+            .tabs .tab a {
+  color: black;
+  /*Custom Text Color*/
+}
+
+.tabs .tab a:hover {
+  color: black;
+  /*Custom Color On Hover*/
+}
+
+.tabs .tab a:focus.active {
+  color: black;
+  /*Custom Text Color While Active*/
+  background-color: rgba(38, 166, 154, 0.2);
+  /*Custom Background Color While Active*/
+}
+
+.tabs .indicator {
+    color: black;
+  background-color:blue;
+  /*Custom Color Of Indicator*/
+}
+        </style>
+    </head>
+    <body>
+        
+        <!-- navbar for big screens and medium-->
+        <div class="top-app-bar z-depth-2 hide-on-small-only">
+            <div class="row">
+                <div class="col l1 m1 "><a href="#">Logo</a></div>
+                <div class="col l1 m1 movies"> <a href="#">Movies</a></div>
+                <div class="col l1 m1 tv"><a href="#">TV</a></div>
+                <div class="col l7 m7" id="searchbar">
+                <input class="browser-default" type="text">
+                <button class="waves-effect"><i class="material-icons">search</i></button>
+                </div>
+                <div class="col l1 m1 group"><i class="material-icons">group</i></div>
+                <div class="col l1 m1 right-align"><a><i class="material-icons" id="user">person</i></a></div>
+            </div>
+        </div>
+        <!--navbar for small  screens-->
+        <div class="row hide-on-med-and-up" id="header-sm-md">
+            <div class="col s1 left-align">
+                <i class="material-icons" style="color: black;cursor: pointer;" onclick="(function(){window.history.back()}())">
+                    arrow_back
+                </i>
+            </div>
+            <span class="col s11 left-align" style="font-weight: bold;font-size: 110%;"><%=userdata[0].username%></span>
+        </div>
+        <!--show on large and-medium-->
+        <div class="row hide-on-small-only" id="personal-info-lg">
+            <div class="col l4 m4 center-align">
+                <%if(userdata[0].profile_path === null || userdata[0].profile_path === undefined){%>
+                    <img src="/src/images/placeholder.png" height="77px" width="77px;">
+                <%}
+                
+
+                else {%>
+                    <img src="<%='https://image.tmdb.org/t/p/w185/' + userdata[0].profile_path%>" height="278px" width="185px;">
+                <%}%>
+            </div>
+            <div class="col l8 m8">
+                <div class="row">
+                    <div class="col l12 m12 left-align">
+                        <span style="font-size: 120%;"><%=userdata[0].username%></span>
+                        
+                        
+                        <%if(!userdata[0].friendRequests) {%>
+                            <%if(!userdata[0].pendingFriendRequests) {%>
+                                <button class="btn waves-effect blue addFriend">Add Friend</button>
+                            <%}
+                            else {%>
+                                <%if(userdata[0].pendingFriendRequests.length) {%>
+                                    <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button>
+                                <%}
+                                else {%>
+                                    <button class="btn waves-effect blue addFriend">Add Friend</button>
+                                <%}%>
+                            <%}%>
+                            
+                        <%} 
+                        else {%>
+                            <%if(userdata[0].friendRequests.length) {%>
+                                <button class="btn waves-effect blue cancelFriendRequest">Cancel Friend Request</button>
+                            <%}
+                            else {%>
+                                <%if(userdata[0].pendingFriendRequests) {%>
+                                    <%if(userdata[0].pendingFriendRequests.length) {%>
+                                        <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button>
+                                    <%}
+                                    else {%>
+                                        <button class="btn waves-effect blue addFriend">Add Friend</button>
+                                    <%}%>
+                                <%}
+                                else {%>
+                                    <button class="btn waves-effect blue addFriend">Add Friend</button>
+                                <%}%>
+                            <%}%>
+                        <%}%>
+                        
+
+                    </div>
+                    <div class="col l12 m12" style="margin-top: 30px;">
+                        <%if(userdata[0].friends!=undefined) {%>
+                            <span style="margin-right: 10%;"><b><%=userdata[0].friends.length%></b> Friends</span>
+                        <%}%>
+                        <span ><b>2</b> Common Groups</span>
+
+                    </div>
+                    <div class="col l12 m12" style="margin-top: 20px;">
+                        <div>About</div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--profile personal info for small screens--->
+        <div class="row hide-on-med-and-up" id="personal-info">
+            <div class="col s4">
+                <%if(userdata[0].profile_path === null || userdata[0].profile_path === undefined){%>
+                    <img src="/src/images/placeholder.png" height="77px" width="77px;">
+                <%}
+                
+
+                else {%>
+                    <img src="<%='https://image.tmdb.org/t/p/w185/' + userdata[0].profile_path%>" height="278px" width="185px;">
+                <%}%>
+            </div>
+            <div class="col s4 align center-align">
+                <%if(userdata[0].friends!=undefined) {%>
+                    <span style="font-weight: 800;"><%=userdata[0].friends.length%></span>
+                    <div>Friends</div>
+                <%}
+                else {%>
+                    <span style="font-weight: 800;">0</span>
+                    <div>Friends</div>
+                <%}%>
+
+            </div>
+            <div class="col s4 center-align">
+                <span style="font-weight: 800;">0</span>
+                <div>Common Groups</div>
+            </div>
+            <div class="col s12 left-align" style="line-height: 30%;">
+                <p><%=userdata[0].username%></p>
+                <div>About</div>
+
+            </div>
+            <div class="col s12" style="margin-top: 30px;" id="profile-options">
+                
+                   
+                <%if(!userdata[0].friendRequests) {%>
+                    <%if(!userdata[0].pendingFriendRequests) {%>
+                        <!-- <button class="btn waves-effect blue addFriend">Add Friend</button> -->
+                        <%if(!userdata[0].friends)  {%>
+                                <button class="btn waves-effect blue addFriend">Add Friend</button>
+                        <%}
+                        else {%>
+                            <%if(userdata[0].friends.length) {%>
+                                <button class="btn waves-effect blue unFriend">UNFRIEND</button>
+                            <%}
+                            else {%>
+                                <button class="btn waves-effect blue addFriend">Add Friend</button>
+                            <%}%>
+                        <%}%>
+
+                    <%}
+                    else {%>
+                        <%if(userdata[0].pendingFriendRequests.length) {%>
+                            <%if(!userdata[0].friends)  {%>
+                                <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button>
+                        <%}
+                        else {%>
+                            <%if(userdata[0].friends.length) {%>
+                                <button class="btn waves-effect blue unFriend">UNFRIEND</button>
+                            <%}
+                            else {%>
+                                <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button>
+                            <%}%>
+                        <%}%>
+                            <!-- <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button> -->
+                        <%}
+                        else {%>
+
+                            <%if(!userdata[0].friends)  {%>
+                                <button class="btn waves-effect blue addFriend">Add Friend</button>
+                        <%}
+                        else {%>
+                            <%if(userdata[0].friends.length) {%>
+                                <button class="btn waves-effect blue unFriend">UNFRIEND</button>
+                            <%}
+                            else {%>
+                                <button class="btn waves-effect blue addFriend">Add Friend</button>
+                            <%}%>
+                        <%}%>
+
+                            
+                        <%}%>
+                    <%}%>
+                    
+                <%} 
+                else {%>
+                    <%if(userdata[0].friendRequests.length) {%>
+
+                        <%if(!userdata[0].friends)  {%>
+                            <button class="btn waves-effect blue cancelFriendRequest">Cancel Friend Request</button>
+                    <%}
+                    else {%>
+                        <%if(userdata[0].friends.length) {%>
+                            <button class="btn waves-effect blue unFriend">UNFRIEND</button>
+                        <%}
+                        else {%>
+                            <button class="btn waves-effect blue cancelFriendRequest">Cancel Friend Request</button>
+                        <%}%>
+                    <%}%>
+
+                        <!-- <button class="btn waves-effect blue cancelFriendRequest">Cancel Friend Request</button> -->
+                    <%}
+                    else {%>
+                        <%if(userdata[0].pendingFriendRequests) {%>
+                            <%if(userdata[0].pendingFriendRequests.length) {%>
+
+                                <%if(!userdata[0].friends)  {%>
+                                    <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button>
+                            <%}
+                            else {%>
+                                <%if(userdata[0].friends.length) {%>
+                                    <button class="btn waves-effect blue unFriend">UNFRIEND</button>
+                                <%}
+                                else {%>
+                                    <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button>
+                                <%}%>
+                            <%}%>
+
+                                <!-- <button class="btn waves-effect blue confirmFriendRequest">Confirm Friend Request</button> -->
+                            <%}
+                            else {%>
+                                <%if(!userdata[0].friends)  {%>
+                                    <button class="btn waves-effect blue addFriend">Add Friend</button>
+                            <%}
+                            else {%>
+                                <%if(userdata[0].friends.length) {%>
+                                    <button class="btn waves-effect blue unFriend">UNFRIEND</button>
+                                <%}
+                                else {%>
+                                    <button class="btn waves-effect blue addFriend">Add Friend</button>
+                                <%}%>
+                            <%}%>
+                            <%}%>
+                        <%}
+                        else {%>
+                            <%if(!userdata[0].friends)  {%>
+                                <button class="btn waves-effect blue addFriend">Add Friend</button>
+                        <%}
+                        else {%>
+                            <%if(userdata[0].friends.length) {%>
+                                <button class="btn waves-effect blue unFriend">UNFRIEND</button>
+                            <%}
+                            else {%>
+                                <button class="btn waves-effect blue addFriend">Add Friend</button>
+                            <%}%>
+                        <%}%>
+                               
+                        <%}%>
+                    <%}%>
+                <%}%>
+                    
+
+                    
+                    
+                
+
+                
+                
+            </div>
+
+
+
+        </div>
+        
+        <div class="row" id="categ-tabs">
+                <div class="col s12 center-align">
+                    <ul class="tabs">
+                    <li class="tab col s4"><a href="#test1" style="color: black;font-weight: 600;">Recommend</a></li>
+                    <li class="tab col s4"><a  href="#test2" style="font-weight: 600;color: black;">Liked</a></li>
+                    <li class="tab col s4"><a href="#test3" style="font-weight: 600;color: black;">Saved</a></li>
+                    </ul>
+                </div>
+                <div id="test1" class="col s12"></div>
+                <div id="test2" class="col s12"></div>
+                <div id="test3" class="col s12"></div>
+        </div>
+        
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script>
+        $(document).ready(() => {
+            $('.tabs').tabs();
+        })
+    
+    </script>
+    <script>
+        
+        var user = document.querySelector('title').textContent;
+        var addFriendBtn = false;
+        var cancelFriendRequestBtn = false;
+        var confirmFriendRequestBtn = false;
+        
+        function goToAddFriendPage() {
+            fetch('/addFriend',{
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        username: user
+                    })
+                })
+                .then(response => {
+                    response.json()
+                    .then(res => {
+                        console.log(res);
+                        
+                        
+                    })
+    
+                })
+            
+                
+        }
+        function sendFriendRequest() {
+            
+            
+        return fetch('/sendFriendRequest',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: user
+                })
+            })
+           
+                
+        }
+        
+        
+        function cancelFriendRequest() {
+            
+            
+            
+            
+            return fetch('/cancelFriendRequest',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: user
+                })
+            })
+            
+               
+        }
+        function confirmFriendRequest(btn,event) {
+            
+            
+            return fetch('/confirmFriendRequest',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: user
+                })
+            })
+            
+        }
+        function unFriend() {
+            return fetch('/unFriend',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: user
+                })
+            })
+        }
+        function loadingState(el) {
+            el.style.opacity = '0.5';
+        }
+        function unloadingState(el) {
+            el.style.opacity = '1.0';
+        }
+
+        $.fn.toggleClick = function() {
+  var functions = arguments,
+      iteration = 0;
+  return this.click(function() {
+    functions[iteration].call();
+    iteration = (iteration + 1) % functions.length;
+  });
+}
+
+
+
+
+console.log(jQuery.fn.toggle);
+console.log($('.sendFriendRequest'))
+
+        
+$(document).ready(function(){
+   
+    $('.addFriend').click(function() {
+        
+        isClicked=$(this).data('clicked');
+        if (isClicked) {isClicked=false;} else {isClicked=true;}
+        $(this).data('clicked',isClicked);
+
+      
+        if(isClicked) {
+            if(addFriendBtn) {
+                loadingState(this)
+                cancelFriendRequest()
+                .then(response => {
+                    console.log(response)
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            unloadingState(this)
+                            console.log(res)
+                            this.textContent = 'add friend'
+                            addFriendBtn = false;
+                        })
+                    }
+                    else {
+                        addFriendBtn = true;
+                    }
+                   
+                })
+            }
+            else {
+                loadingState(this);
+                sendFriendRequest()
+                .then(response => {
+                    console.log(response);
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            unloadingState(this)
+                            console.log(res)
+                            this.textContent = 'cancel friend request';
+                            addFriendBtn = true;
+                        })
+                    }
+                    else {
+                        addFriendBtn = false;
+                    }
+                    
+                })
+            }
+            
+        }
+        else {
+            if(addFriendBtn) {
+                loadingState(this)
+                cancelFriendRequest()
+                .then(response => {
+                    console.log(response)
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            unloadingState(this);
+                            console.log(res)
+                            this.textContent = 'add friend'
+                            addFriendBtn = false;
+                        })
+                    }
+                    else {
+                        addFriendBtn = true;
+                    }
+                    
+                })
+            }
+            else {
+                loadingState(this)
+                sendFriendRequest()
+                .then(response => {
+                    console.log(response)
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            unloadingState(this)
+                            console.log(res)
+                            this.textContent = 'cancel friend request';
+                            addFriendBtn = true;
+                        })
+                    }
+                    else {
+                        addFriendBtn = false;
+                    }
+                    
+                })
+            }
+            
+        }
+    });
+
+    
+    $('.cancelFriendRequest').click(function() {
+        isClicked=$(this).data('clicked');
+        if (isClicked) {isClicked=false;} else {isClicked=true;}
+        $(this).data('clicked',isClicked);
+
+        // if(isClicked) {
+        //         console.log(this)
+        //         this.textContent = 'add friend'
+        //         cancelFriendRequest();
+        // }
+        // else {
+        //     this.textContent = 'cancel friend request';
+        //     console.log(this)
+        //     sendFriendRequest();
+        // }
+        if(isClicked) {
+            if(cancelFriendRequestBtn) {
+                loadingState(this)
+                sendFriendRequest()
+                .then(response => {
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            console.log(res);
+                            unloadingState(this);
+                            this.textContent = 'cancel friend request';
+                            cancelFriendRequestBtn = false;
+                        })
+                    }
+                    else {
+                        cancelFriendRequestBtn = true;
+                    }
+                })
+            }
+            else {
+                loadingState(this)
+                cancelFriendRequest()
+                .then(response => {
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            console.log(res);
+                            unloadingState(this);
+                            this.textContent = 'add friend';
+                            cancelFriendRequestBtn = true;
+                        })
+                    }
+                    else {
+                        cancelFriendRequestBtn = false;
+                    }
+                })
+            }
+        }
+        else {
+            if(cancelFriendRequestBtn) {
+                loadingState(this);
+                sendFriendRequest()
+                .then(response => {
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            console.log(res);
+                            unloadingState(this);
+                            this.textContent = 'cancel friend request';
+                            cancelFriendRequestBtn = false;
+
+                        })
+                    }
+                    else {
+                        cancelFriendRequestBtn = true;
+                    }
+                })
+            }
+            else {
+                loadingState(this);
+                cancelFriendRequest()
+                .then(response => {
+                    if(response.ok) {
+                        response.json()
+                        .then(res => {
+                            console.log(res);
+                            unloadingState(this);
+                            this.textContent = 'add friend';
+                            cancelFriendRequestBtn = true;
+                        })
+                    }
+                    else {
+                        
+                        cancelFriendRequestBtn = false;
+                    }
+                })
+            }
+        }
+
+
+    })
+    $('.confirmFriendRequest').click(function() {
+        isClicked=$(this).data('clicked');
+        if (isClicked) {isClicked=false;} else {isClicked=true;}
+        $(this).data('clicked',isClicked);
+
+        if(isClicked) {
+                console.log(this)
+                this.textContent = 'unfriend'
+                confirmFriendRequest();
+        }
+        else {
+            this.textContent = 'add friend';
+            unFriend();
+            
+        }
+    })
+    
+});
+
+    $('.unFriend').click(function() {
+        console.log(this)
+        var btn = document.createElement('button');
+        btn.setAttribute('class','btn waves-effect blue addFriendOther');
+        btn.textContent = 'Add Friend';
+        this.replaceWith(btn);
+       
+    })
+
+    $('.addFriendOther').click(function() {
+            // isClicked=$(this).data('clicked');
+            // if (isClicked) {isClicked=false;} else {isClicked=true;}
+            // $(this).data('clicked',isClicked);
+
+            // if(isClicked) {
+            //         console.log(this)
+            //         this.textContent = 'cancel friend request';
+            //         sendFriendRequest();
+            // }
+            // else {
+            //     this.textContent = 'add friend';
+            //     cancelFriendRequest()
+                
+            // }
+            console.log('clicked')
+
+        });
+
+        
+
+
+        
+    </script>
+</html>
+
+
+

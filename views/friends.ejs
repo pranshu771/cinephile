@@ -1,0 +1,218 @@
+<html>
+    <head>
+        <title>Recommend</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <style>
+            .top-app-bar {
+                padding: 10px;
+                box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+            }
+            .friends-list {
+                margin-right: 10%;
+            }
+            .friends-list img{
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+            }
+            .friends-list button {
+                cursor: pointer;
+                border: 0px;
+                background-color: #0A79DF;
+                color: white;
+                font-weight: 500;
+                
+                border-radius: 5px;
+                
+            }
+        </style>
+    </head>
+    <script>
+        
+    </script>
+    <body>
+
+        <div class="row top-app-bar">
+            <div class="col s2">
+                <i class="material-icons" onclick="(function() {window.location.href = '/'}())" style="cursor: pointer;">arrow_back</i>
+
+            </div>
+            <div class="col s10">
+                <span style="font-weight: 600;font-size: 120%;"><%=data[0].username%></span>
+            </div>
+
+        </div>
+        <%if(friends) {%>
+            <%friends.forEach(item => {%>
+                <div class="row friends-list">
+                    <div class="col s2">
+                        <img src="/src/images/placeholder.png" style="cursor: pointer;"
+                         onclick="(function(){window.location.href = '/myAccount/<%=item.username%>'}())">
+                    </div>
+                    <div class="col s4">
+                        <span style="position: relative;top: 7px;color: black;font-weight: 500;cursor: pointer;"
+                        onclick="(function(){window.location.href = '/myAccount/<%=item.username%>'}())"><%=item.username%></span>
+                        
+                    </div>
+                    <div class="col s6">
+                        
+    
+                        <button class="waves-effect blue btn-small" onclick="recommend('<%=item.username%>',this,'<%=movie[0].id%>','<%=movie[0].title%>','<%=movie[0].backdrop_path%>');">Recommend</button>
+    
+                    </div>
+                    
+                </div>
+            <%})%>
+        <%}
+        if(recommendedTo) {%>
+        
+            <%recommendedTo.forEach(item => {%>
+                
+                <div class="row friends-list">
+                    <div class="col s2">
+                        <img src="/src/images/placeholder.png" style="cursor: pointer;"
+                        onclick="(function(){window.location.href = '/myAccount/<%=item.username%>'}())">
+                    </div>
+                    <div class="col s4">
+                        <span style="position: relative;top: 7px;color: black;font-weight: 500;cursor: pointer;"
+                        onclick="(function(){window.location.href = '/myAccount/<%=item.username%>'}())"><%=item.username%></span>
+                        
+                    </div>
+                    <div class="col s6">
+                        
+                        <button class="btn waves-effect grey btn-small" style="background-color: darkgray">Recommended</button>
+                        
+    
+                    </div>
+                    
+                </div>
+            <%})%>
+        <%}
+        if(recommendedBy) {%>
+        
+            <%recommendedBy.forEach(item => {%>
+                <div class="row friends-list">
+                    <div class="col s2">
+                        <img src="/src/images/placeholder.png" style="cursor: pointer;"
+                        onclick="(function(){window.location.href = '/myAccount/<%=item.username%>'}())">
+                    </div>
+                    <div class="col s4">
+                        <span style="position: relative;top: 7px;color: black;font-weight: 500;cursor: pointer;"
+                         onclick="(function () {}(window.location.href = '/myAccount/' + '<%=item.username%>'));"><%=item.username%></span>
+                        
+                    </div>
+                    <div class="col s6">
+                        <a class="btn waves-effect green btn-small modal-trigger" style="background-color: green;" href = "#<%=movie[0].id%>">Reply</a>
+                    </div>
+                    
+                </div>
+
+
+                <!--modal-->
+
+                <div id="<%=movie[0].id%>" class="modal">
+                    <div class="modal-content">
+                        <h4>Reply to: <%=item.username%></h4>
+                            <input type="text" name="reply">
+                            <button class="btn waves-effect" onclick="reply('<%=item.username%>','<%=data[0].username%>','<%=movie[0].id%>','<%=movie[0].title%>','<%=movie[0].backdrop_path%>')">Submit</button>
+                    </div>
+                    <div class="modal-footer">
+                        <a href="#!" class="modal-close waves-effect waves-green btn-flat">close</a>
+                    </div>
+                </div>
+            <%})%>
+        <%}
+        else {%>
+            
+        <%}%>
+
+        
+        <%=movie[0]%>
+
+        
+        
+    </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+        $('.modal').modal();
+    
+        var user = document.querySelector('.top-app-bar').querySelector('span').textContent;
+        var recommendedTo = document.getElementById('recommendedTo');
+        
+        
+        
+        console.log(user);
+        function recommend(friend,btn,movieId,movieName,posterPath) {
+            
+            loadingState(btn);
+            fetch('/recommend',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: user,
+                    friendname: friend,
+                    movieId: movieId,
+                    movieName: movieName,
+                    posterPath: posterPath
+                })
+            })
+            .then(response => {
+                console.log(response);
+                if(response.ok) {
+                    response.json()
+                    .then(res => {
+                        unLoadingState(btn);
+                        btn.textContent = 'Recommended';
+                        btn.classList.remove('blue');
+                        btn.classList.add('grey');
+                    })
+                }
+            })
+            
+            
+        }
+        function unrecommend() {
+            console.log('Unrecommend');
+        }
+        function reply(repliedTo,replier,movieId,movieName,posterPath) {
+            fetch('/' + movieId + '/' + replier + '/friends/reply',{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    repliedTo: repliedTo,
+                    replier: replier,
+                    movieId: movieId,
+                    movieName: movieName,
+                    posterPath: posterPath
+                })
+            })
+            .then(response => {
+                response.json()
+                .then(res => {
+                    console.log(res);
+                })
+            })
+        }
+
+        function loadingState(el) {
+            el.style.opacity = '0.5';
+        }
+        function unLoadingState(el) {
+            el.style.opacity = '1.0';
+        }
+        
+        
+        
+    </script>
+</html>

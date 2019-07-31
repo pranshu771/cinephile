@@ -1,0 +1,196 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PWAGram</title>
+  
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="/src/css/navbar.css">
+  
+
+  <style>
+            
+        #main-lg {
+            /* display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-around; */
+            
+            margin-top: 20px;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            
+        }
+        #main-lg img {
+            border-radius: 10px;
+            
+        }
+        #main-lg span {
+            color: white;
+            font-family: 'Muli', sans-serif;
+            font-size: 160%;
+        }
+        #header-sm-md {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.1);
+        }
+        #main-md-sm {
+           
+            
+
+            
+
+            
+        }
+        #main-md-sm img {
+            border-radius: 10px;
+            
+        }
+        #options a{
+            background-color: blue;
+            border-radius: 15px;
+            border: 0px;
+            color: white;
+            font-size: 100%;
+            outline: none;
+            
+            
+        }
+        #main-md-sm h5 {
+            color: black;
+            font-weight: 600;
+            font-size: 160%;
+        }
+        
+        .cast {
+            display: flex;
+            flex: row nowrap;
+            overflow-x: auto;
+            margin-bottom: 30px;
+        }
+        .cast::-webkit-scrollbar {
+            display: none;
+        }
+        .cast img {
+            margin-right: 10px;
+            
+        }
+    </style>
+  
+  
+</head>
+<body>
+  
+  
+
+  
+    <!-- top app bar for large screens -->
+  
+    <div class="top-app-bar z-depth-3 hide-on-med-and-down">
+        <div class="row">
+          <div class="col l2 s3 m3 left-align"><a href="#"><i class="material-icons">home</i></a></div>
+          <div class="col l6 hide-on-med-and-down" id="searchbar">
+            <input class="browser-default" type="text">
+            <button class="waves-effect"><i class="material-icons">search</i></button>
+          </div>
+          <div class="col s3 m3 hide-on-large-only center-align search"><a href="#"><i class="material-icons">search</i></a></div>
+          <div class="col l2 s3 m3 center-align person"><a href="#"><i class="material-icons">person</i></a></div>
+          <div class="col l2 s3 m3 right-align"><a href="#"><i class="material-icons">group</i></a></div>
+        </div>
+      </div>
+
+  <!-- upper navbar for medium and small screens -->
+  <div class="row hide-on-large-only" id="header-sm-md">
+    <div class="col m1 s1 left-align">
+        <i class="material-icons" style="color: black;cursor: pointer;" onclick="(function(){window.history.back()}())">arrow_back</i>
+    </div>
+    <span class="col m11 s11 center-align" style="font-weight: bold;font-size: 110%;"><%=data[0].title%></span>
+  </div>
+  <!-- for main content on large screens -->
+  <div id="main-lg" class="row hide-on-med-and-down">
+        <div class="col l6 center-align">
+            <img src="<%= 'https://image.tmdb.org/t/p/w780' + data[0].poster_path%>" height="576px" width="384px">
+        </div>
+        <div class="col l6 center-align">
+            <span><%=data[0].title%></span>
+        </div>
+        
+
+    </div>
+    <!-- main content-small screens -->
+    <div id="main-md-sm" class="row hide-on-large-only">
+            <div class="col m12 s12 center-align">
+                <img src="<%= 'https://image.tmdb.org/t/p/w500' + data[0].backdrop_path%>" height="100%" width="100%;">
+            </div>
+            <div class="col m12 s12">
+                <div class="row" id="options">
+                    <div class="col m2 s2"><i class="material-icons">thumb_up_alt</i></div>
+                    <div class="col m2 s2"><i class="material-icons">thumb_down_alt</i></div>
+                    <div class="col m2 s2"><i class="material-icons">done</i></div>
+                    <div class="col m6 s6 center-align">
+                        <a class="btn waves-effect blue" id="recommend"
+                         onclick="(function(){window.location.href = '/friends/<%=data[0].id%>'}())">Recommend</a>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="col m12 s12 left-align">
+                
+                <h5><%=data[0].title%></h5> 
+                <div style="display: block;">
+                    <%data[0].genres.forEach(item => {%>   
+                        <%=item.name%>
+                    <%})%>
+                </div>
+                <div style="display: block;">
+                        <%data[0].spoken_languages.forEach(item => {%>   
+                            <%=item.name%>
+                        <%})%>
+                </div>
+                <div style="display: block;">
+                    <i class="material-icons" style="font-size: 90%;">grade</i>
+                    <span style="font-size: 95%;"><%=data[0].vote_average%>/10</span>
+                </div>
+                
+            </div>
+            
+            <div class="col m12 s12">
+                <h5>Storyline</h5>
+                <span style="font-size: 99%;font-family:monospace"><%=data[0].overview%></span>
+            </div>
+            <div class="col m12 s12">
+                <h5>Cast</h5>
+                <div class="cast">
+                    
+                    <%data[0].credits.cast.forEach((item,index,array) => {%>
+                        <%if(index < 2) {%>
+                            <%if(item.profile_path === null){%>
+                                <img src="/src/images/placeholder.png" height="278px" width="185px;">
+                            <%}
+                            else {%>
+                                <img src="<%='https://image.tmdb.org/t/p/w185/' + item.profile_path%>" height="278px" width="185px;">
+                            <%}%>
+                        <%}
+                        else {%>
+                        
+                        <%}%>
+                        
+                    <%})%>
+                     
+                </div>
+
+
+            </div>
+    </div>
+    <!-- bottom navigation for small and medium screens -->
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+</html>
+  
